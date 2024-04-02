@@ -15,6 +15,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method')); // for delete request from form
 // Routes
 
+
+
 app.get('/', async (req, res) => {
 
     const shorturls = await Schema.find();
@@ -55,19 +57,31 @@ app.get('/:shorturl', async (req, res) => {
 
     try { 
         const shorturl = await Schema.findOne({shorturl:req.params.shorturl});
-    
+        
         if (shorturl === null) {
             return res.status(404).json({ msg: `This URL does not exist.` });
         }
     
         shorturl.clicks++;
         shorturl.save();
-    
+        
         res.redirect(shorturl.fullurl);
 
     } catch (error) {
         res.status(500).json({msg:`Internal Server Error`});
     }
+});
+
+
+// delete route 
+
+app.delete('/:id' ,async (req,res)=>{
+
+    const url = await Schema.findByIdAndDelete(req.params.id)
+
+    if(!url) return res.status(404).json({msg:`Url Not found`})
+
+    res.redirect('/')
 });
 
 

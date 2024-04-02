@@ -13,6 +13,7 @@
             max-width: 600px;
             /* Adjust the maximum width as needed */
         }
+
         .table-fixed thead th,
         .table-fixed tbody td {
             text-overflow: ellipsis;
@@ -37,6 +38,7 @@
                         <th scope="col">Full_url</th>
                         <th scope="col">Short_url</th>
                         <th scope="col">Clicks</th>
+                        <th scope="col">Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -50,6 +52,11 @@
                                 </a></td>
                             <td>
                                 <%= url.clicks%>
+                            </td>
+                            <td>
+                                <form action="<%= url.id%>?_method=DELETE" method="POST" class="d-inline">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
                             </td>
                         </tr>
                         <%})%>
