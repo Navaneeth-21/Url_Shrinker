@@ -12,10 +12,15 @@ app.set('view engine', 'ejs');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(methodOverride('_method')); // for delete request from form
+
+// override with POST having ?_method=DELETE
+
+app.use(methodOverride('_method')); 
+
+
 // Routes
 
-
+// GET all  urls - / (index)
 
 app.get('/', async (req, res) => {
 
@@ -25,6 +30,8 @@ app.get('/', async (req, res) => {
 
 });
 
+
+// create  new url - /shorturls (new)
 
 app.post('/shorturls', async (req, res) => {
     
@@ -52,6 +59,8 @@ app.post('/shorturls', async (req, res) => {
     }
 });
 
+
+// Incrementing the clicks and redirect to the original URL - /:shorturl (show)
 
 app.get('/:shorturl', async (req, res) => {
 
